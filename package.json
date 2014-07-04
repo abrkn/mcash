@@ -18,7 +18,7 @@
   },
   "main": "./src/client.js",
   "engines": {
-    "node": ">= 0.6.0"
+    "node": ">= 0.10.0"
   },
   "scripts": {
     "prepublish": "npm prune",
