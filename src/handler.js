@@ -73,7 +73,7 @@ exports.verifyAuthorization = function(req, key) {
         req.method,
         req.protocol,
         req.headers.host,
-        req.path,
+        req.originalUrl,
         Object.keys(req.headers).filter(function(key) {
             return !!key.match(/^x-mcash-/)
         }).sort().reduce(function(p, key) {
@@ -84,6 +84,8 @@ exports.verifyAuthorization = function(req, key) {
                 req.headers[key])
         }, '')
     )
+
+    debug('concat:\n%s', concat)
 
     debug('key:\n%s', key)
     debug('expected: %s', expected)

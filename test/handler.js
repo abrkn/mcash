@@ -5,9 +5,10 @@ var mck = require('mck')
 
 // From: http://dev.mca.sh/merchant/authentication.html#authentication-mcash-signatures
 var testVectorReq1 = {
-    path: '/some/resource/',
+    originalUrl: '/some/resource/',
     method: 'POST',
     protocol: 'http',
+    host: 'server.test',
     headers: {
         'host': 'server.test',
         'accept': 'application/vnd.mcash.api.merchant.v1+json',
