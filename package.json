@@ -21,7 +21,6 @@
     "node": ">= 0.10.0"
   },
   "scripts": {
-    "prepublish": "npm prune",
     "test": "mocha --check-leaks --reporter dot",
     "test-travis": "mocha --check-leaks --reporter spec"
   },
