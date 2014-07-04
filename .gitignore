@@ -1,0 +1,7 @@
+config.dev.json
+node_modules
+*.key
+*.log
+play.js
+*.tgz
+package

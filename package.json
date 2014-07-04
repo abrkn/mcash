@@ -1,0 +1,35 @@
+{
+  "name": "mcash",
+  "version": "0.0.1",
+  "description": "mCASH client and callback handler for node.js",
+  "keywords": [
+    "mcash",
+    "node.js"
+  ],
+  "dependencies": {
+    "superagent": "0.18.0",
+    "konfu": "1.1.4",
+    "request": "2.36.0",
+    "lodash": "2.4.1",
+    "body-parser": "1.4.3",
+    "express": "4.4.5",
+    "debug": "1.0.2"
+  },
+  "devDependencies": {
+    "expect.js": "0.3.1",
+    "mocha": "1.20.1",
+    "mck": "1.0.0"
+  },
+  "main": "./src/client.js",
+  "engines": {
+    "node": ">= 0.6.0"
+  },
+  "scripts": {
+    "prepublish": "npm prune",
+    "test": "mocha --check-leaks --reporter dot",
+    "test-travis": "mocha --check-leaks --reporter spec"
+  },
+  "repository": "abrkn/mcash",
+  "license": "MIT",
+  "author": "Andreas Brekken <a@abrkn.com>"
+}

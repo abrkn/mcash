@@ -1,0 +1,11 @@
+.gitignore
+.npmignore
+test.js
+node_modules
+*.key
+play.js
+*.tgz
+test
+.travis.yml
+config.dev.json
+package
