@@ -8,11 +8,7 @@
   ],
   "dependencies": {
     "superagent": "0.18.0",
-    "konfu": "1.1.4",
-    "request": "2.36.0",
-    "lodash": "2.4.1",
     "body-parser": "1.4.3",
-    "express": "4.4.5",
     "debug": "1.0.2"
   },
   "devDependencies": {

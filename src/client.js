@@ -1,5 +1,4 @@
 var superagent = require('superagent')
-var lodash = require('lodash')
 var crypto = require('crypto')
 var debug = require('debug')('mcash')
 var format = require('util').format
