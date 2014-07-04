@@ -36,24 +36,3 @@ describe('verifyAuthorization', function() {
         if (err) throw new Error(err)
     })
 })
-
-describe('handler', function() {
-    it('calls verifiers', function(done) {
-        var handler = Handler('sample')
-
-        var digest = mck.once(Handler, 'verifyDigest', function(req) {
-            expect(req).to.be(testVectorReq1)
-        })
-
-        var auth = mck.once(Handler, 'verifyAuthorization', function(req, key) {
-            expect(req).to.be(testVectorReq1)
-            expect(key).to.be(Handler.KEYS.sample)
-        })
-
-        handler(testVectorReq1, null, function() {
-            expect(digest.invokes).to.be(1)
-            expect(auth.invokes).to.be(1)
-            done()
-        })
-    })
-})

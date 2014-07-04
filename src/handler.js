@@ -3,25 +3,7 @@ var debug = require('debug')('mcash:handler')
 var format = require('util').format
 var EventEmitter = require('events').EventEmitter
 
-
 module.exports = exports = function(environment) {
-    environment || (environment = 'production')
-    debug('environment: %s', environment)
-
-    return function(req, res, next) {
-        var err = exports.verifyDigest(req)
-        if (err) return next(new Error('Digest verification failed: ' + err))
-
-        err = exports.verifyAuthorization(req, exports.KEYS[environment])
-        if (err) return next(new Error('Authorization verification failed: ' + err))
-
-        next()
-    }
-}
-
-exports.KEYS = require('../keys.json')
-
-exports.parser = function(environment) {
     return require('body-parser').json({
         type: 'application/vnd.mcash.api.merchant.v1+json',
         verify: function(req, res, buf, encoding) {
@@ -33,6 +15,8 @@ exports.parser = function(environment) {
         }
     })
 }
+
+exports.KEYS = require('../keys.json')
 
 exports.verifyDigest = function(req, text) {
     var header = req.headers['x-mcash-content-digest']
