@@ -2,6 +2,9 @@ var superagent = require('superagent')
 var crypto = require('crypto')
 var debug = require('debug')('mcash')
 var format = require('util').format
+var CONTENT_TYPE = 'application/vnd.mcash.api.merchant.v1+json'
+
+superagent.parse[CONTENT_TYPE] = superagent.parse['application/json']
 
 var Mcash = module.exports = exports = function(opts) {
     this.opts = opts
