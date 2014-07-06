@@ -18,7 +18,7 @@ exports.ENDPOINTS = {
 Mcash.prototype.request = function(type, url) {
     var fn = superagent[type.toLowerCase()]
 
-    var request = fn(this.endpoint + url)
+    var request = fn(exports.ENDPOINTS[this.opts.environment] + url)
     .buffer(true)
     .parse(superagent.parse.json)
     .set('Accept', 'application/vnd.mcash.api.merchant.v1+json')
@@ -32,3 +32,5 @@ Mcash.prototype.request = function(type, url) {
 
     return request
 }
+
+exports.handler = require('./handler')
