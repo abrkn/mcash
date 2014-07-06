@@ -1,0 +1,54 @@
+#!/usr/bin/env node
+var argv = require('minimist')(process.argv.slice(2))
+var konfu = require('konfu')
+var Mcash = require('../src/client')
+var mcash = new Mcash(konfu)
+
+function usage() {
+    console.log('Usage: mcash <command>')
+    console.log('mcash shortlink create [--callback http://url] [-- description desc]')
+    console.log('mcash <id>')
+}
+
+var command = argv._[0]
+
+if (!command) return usage()
+
+function createShortlink() {
+    var options = {
+        description: argv.description,
+        callback_uri: argv.callback
+    }
+    mcash.request('POST', 'shortlink/')
+    .send(options)
+    .end(function(err, res) {
+        if (err) throw err
+        if (!res.ok) throw res.toError()
+        console.log(res.body.id)
+    })
+}
+
+function fetchShortlink(linkId) {
+    mcash.request('GET', 'shortlink/' + linkId + '/')
+    .end(function(err, res) {
+        if (err) throw err
+        if (!res.ok) throw res.toError()
+        console.log(res.body)
+    })
+}
+
+function shortlink() {
+    var linkId = argv._[1]
+    if (!linkId) return usage()
+    if (linkId == 'create') {
+        createShortlink()
+    } else {
+        fetchShortlink(linkId)
+    }
+}
+
+if (command == 'shortlink') {
+    shortlink()
+} else {
+    usage()
+}

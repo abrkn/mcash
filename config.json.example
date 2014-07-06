@@ -1,0 +1,8 @@
+{
+    "testbedToken": "mytestbedtoken",
+    "environment": "test",
+    "user": "bobby",
+    "secret": "supersecret",
+    "merchantId": "abcdefg",
+    "privateKey": "-----BEGIN RSA PRIVATE KEY-----\nremember to escape newlines\n-----END RSA PRIVATE KEY-----"
+}

@@ -7,6 +7,8 @@
     "node.js"
   ],
   "dependencies": {
+    "konfu": "1.1.4",
+    "minimist": "0.2.0",
     "superagent": "0.18.0",
     "body-parser": "1.4.3",
     "debug": "1.0.2"
