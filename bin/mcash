@@ -19,8 +19,7 @@ function createShortlink() {
         description: argv.description,
         callback_uri: argv.callback
     }
-    mcash.request('POST', 'shortlink/')
-    .send(options)
+    mcash.request('POST', 'shortlink/', { payload: options })
     .end(function(err, res) {
         if (err) throw err
         if (!res.ok) throw res.toError()
