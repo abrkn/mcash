@@ -29,7 +29,6 @@ Mcash.prototype.request = function(type, url, opts) {
     }, opts)
 
    var request = fn(exports.ENDPOINTS[this.opts.environment] + url)
-    // var request = fn('http://httpbin.org/post')
     .buffer(true)
     .parse(superagent.parse.json)
     .set('Accept', 'application/vnd.mcash.api.merchant.v1+json')
