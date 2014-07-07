@@ -7,7 +7,7 @@ var mcash = new Mcash(konfu)
 function usage() {
     console.log('Usage: mcash <command>')
     console.log('mcash shortlink create [--callback http://url] [-- description desc]')
-    console.log('mcash <id>')
+    console.log('mcash shortlink <id>')
 }
 
 var command = argv._[0]
