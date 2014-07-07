@@ -7,6 +7,7 @@ var mcash = new Mcash(konfu)
 function usage() {
     console.log('Usage: mcash <command>')
     console.log('mcash shortlink create [--callback http://url] [-- description desc]')
+    console.log('mcash shortlink list')
     console.log('mcash shortlink <id>')
 }
 
@@ -27,6 +28,15 @@ function createShortlink() {
     })
 }
 
+function listShortlinks(linkId) {
+    mcash.request('GET', 'shortlink/')
+    .end(function(err, res) {
+        if (err) throw err
+        if (!res.ok) throw res.toError()
+        console.log(res.body)
+    })
+}
+
 function fetchShortlink(linkId) {
     mcash.request('GET', 'shortlink/' + linkId + '/')
     .end(function(err, res) {
@@ -41,6 +51,8 @@ function shortlink() {
     if (!linkId) return usage()
     if (linkId == 'create') {
         createShortlink()
+    } else if (linkId == 'list') {
+        listShortlinks()
     } else {
         fetchShortlink(linkId)
     }

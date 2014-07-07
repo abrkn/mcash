@@ -7,5 +7,5 @@ play.js
 *.tgz
 test
 .travis.yml
-config.dev.json
+config.*.json
 package
