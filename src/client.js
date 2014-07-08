@@ -70,6 +70,10 @@ Mcash.prototype.request = function(type, url, opts) {
         .update(concat)
         .sign(this.opts.privateKey, 'base64')
 
+        if (!sign) {
+            throw new Error('Unable to sign. Bad private key?')
+        }
+
         debug('will sign with private key:\n%s', concat)
 
         debug('signature:\n%s', sign)
