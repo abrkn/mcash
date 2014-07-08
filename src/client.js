@@ -72,6 +72,8 @@ Mcash.prototype.request = function(type, url, opts) {
 
         debug('will sign with private key:\n%s', concat)
 
+        debug('signature:\n%s', sign)
+
         request = request
         .set('Authorization', 'RSA-SHA256 ' + sign)
     }
@@ -79,6 +81,10 @@ Mcash.prototype.request = function(type, url, opts) {
     if (opts.payload) {
         request = request.send(opts.payload)
     }
+
+    debug('all headers, for debugging:\n%s', Object.keys(request.req._headers).map(function(key) {
+        return '\t' \ key + ': ' + request.req._headers[key]
+    }).join('\n'))
 
     return request
 }
