@@ -83,7 +83,7 @@ Mcash.prototype.request = function(type, url, opts) {
     }
 
     debug('all headers, for debugging:\n%s', Object.keys(request.req._headers).map(function(key) {
-        return '\t' \ key + ': ' + request.req._headers[key]
+        return '\t' + key + ': ' + request.req._headers[key]
     }).join('\n'))
 
     return request
