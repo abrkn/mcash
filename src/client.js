@@ -44,7 +44,7 @@ Mcash.prototype.request = function(type, url, opts) {
         .set('Authorization', 'SECRET ' + this.opts.secret)
     } else if (this.opts.privateKey) {
         var payload = opts.payload ? JSON.stringify(opts.payload) : ''
-        debug('payload (post data) is:\n%s', payload)
+        debug('payload (post data) is: %s', payload || '<none>')
         var digest = crypto.createHash('sha256').update(payload).digest('base64')
 
         request = request
