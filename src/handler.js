@@ -3,14 +3,14 @@ var debug = require('debug')('mcash:handler')
 var format = require('util').format
 var EventEmitter = require('events').EventEmitter
 
-module.exports = exports = function(environment) {
+module.exports = exports = function(environment, callbackUri) {
     return require('body-parser').json({
         type: 'application/vnd.mcash.api.merchant.v1+json',
         verify: function(req, res, buf, encoding) {
             var err = exports.verifyDigest(req, buf.toString('utf8'))
             if (err) throw new Error('Digest verification failed: ' + err)
 
-            err = exports.verifyAuthorization(req, exports.KEYS[environment])
+            err = exports.verifyAuthorization(req, exports.KEYS[environment], callbackUri)
             if (err) throw new Error('Authorization verification failed: ' + err)
         }
     })
@@ -39,7 +39,7 @@ exports.verifyDigest = function(req, text) {
     if (actual != expected) return 'mismatch'
 }
 
-exports.verifyAuthorization = function(req, key) {
+exports.verifyAuthorization = function(req, key, callbackUri) {
     var header = req.headers['authorization']
     if (!header) return 'header missing'
 
@@ -52,12 +52,14 @@ exports.verifyAuthorization = function(req, key) {
 
     var expected = match[2]
 
+    if (!callbackUri) {
+        callbackUri = format('%s://%s%s', req.protocol, req.headers.host, req.originalUrl)
+    }
+
     // POST|http://server.test/some/resource/|X-MCASH-CONTENT-DIGEST=SHA256=oWVxV3hh...
-    var concat = format('%s|%s://%s%s|%s',
+    var concat = format('%s|%s|%s',
         req.method,
-        req.protocol,
-        req.headers.host,
-        req.originalUrl,
+        callbackUri,
         Object.keys(req.headers).filter(function(key) {
             return !!key.match(/^x-mcash-/)
         }).sort().reduce(function(p, key) {
