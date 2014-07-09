@@ -9,6 +9,9 @@ function usage() {
     console.log('mcash shortlink create [--callback http://url] [-- description desc]')
     console.log('mcash shortlink list')
     console.log('mcash shortlink <id>')
+    console.log('mcash ledger list')
+    console.log('mcash payment <id>')
+    console.log('mcash pos create --name abc --type web --id mypos')
 }
 
 var command = argv._[0]
@@ -58,8 +61,98 @@ function shortlink() {
     }
 }
 
+function ledger() {
+    var id = argv._[1]
+    if (!id) return usage()
+    if (id == 'list') {
+        listLedger()
+    } else {
+        fetchLedger(id)
+    }
+}
+
+function listLedger() {
+    mcash.request('GET', 'ledger/')
+    .end(function(err, res) {
+        if (err) throw err
+        if (!res.ok) throw res.toError()
+        console.log(res.body)
+    })
+}
+
+function fetchLedger(id) {
+    mcash.request('GET', 'ledger/' + id + '/')
+    .end(function(err, res) {
+        if (err) throw err
+        if (!res.ok) throw res.toError()
+        console.log(res.body)
+    })
+}
+
+function payment() {
+    var id = argv._[1]
+    if (!id) return usage()
+
+    if (argv.abort) {
+        console.log('aborting payment request %s', id)
+        mcash.request('PUT', 'payment_request/' + id + '/', {
+            payload: {
+                action: 'ABORT'
+            }
+        })
+        .end(function(err, res) {
+            if (err) throw err
+            if (!res.ok) throw res.toError()
+            console.log(res.body)
+        })
+    } else {
+        mcash.request('GET', 'payment_request/' + id + '/')
+        .end(function(err, res) {
+            if (err) throw err
+            if (!res.ok) throw res.toError()
+            console.log(res.body)
+        })
+    }
+}
+
+function pos() {
+    var id = argv._[1]
+    if (!id) return usage()
+    if (id == 'create') {
+        mcash.request('POST', 'pos/', {
+            payload: {
+                name: argv.name,
+                type: argv.type,
+                id: argv.id
+            }
+        })
+        .end(writeOutputOrError)
+    } else if (id == 'list') {
+        mcash.request('GET', 'pos/')
+        .end(writeOutputOrError)
+    } else {
+        mcash.request('GET', 'pos/' + id + '/')
+        .end(writeOutputOrError)
+    }
+}
+
+function writeOutputOrError(err, res) {
+    if (err) throw err
+    if (!res.ok) {
+        console.error(res.body || res.text)
+        throw res.toError()
+    }
+    console.log(res.body)
+}
+
 if (command == 'shortlink') {
     shortlink()
+} else if (command == 'ledger') {
+    ledger()
+} else if (command == 'payment') {
+    payment()
+} else if (command == 'pos') {
+    pos()
 } else {
     usage()
 }
